@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
+import { evaluate } from "mathjs";
+import {connect} from "react-redux"
 
 class CalcPad extends Component {
   state = {
     input: "",
-    equation: "",
+    result: 0,
   };
 
   handleInput = (event) => {
@@ -16,27 +18,53 @@ class CalcPad extends Component {
   };
 
   clearInput = (event) => {
-      this.setState({
-          ...this.state,
-          input: "",
-      })
-  }
-
-  backspace = event => {
-      try {
-          this.setState({
-              input: this.state.input.slice(0,-1)
-          });
-      } catch (error) {
-          this.setState({
-              input: "ERROR"
-          });
-      }
+    this.setState({
+      ...this.state,
+      input: "",
+    });
   };
 
-  evaluate = event => {
+  backspace = (event) => {
+    try {
+      this.setState({
+        input: this.state.input.slice(0, -1),
+      });
+    } catch (error) {
+      this.setState({
+        input: "ERROR",
+      });
+    }
+  };
 
-  }
+  evalExpression = (event) => {
+    //see if there is an expresson to evaluate
+    try {
+      this.setState(
+        {
+          result: evaluate(this.state.input),
+        },
+        //set this function up to make sure that result is changed in state BEFORE the payload is sent to the saga, but before input is evaluated
+        function () {
+          this.props.dispatch({
+            type: "NEW_EQUATION",
+            payload: this.state,
+          });
+          this.setState({
+            input: evaluate(this.state.input),
+          });
+        }
+      );
+      //if there is an invalid expression "error" will be displayed
+    } catch (error) {
+      this.setState({
+        input: "ERROR",
+      });
+    }
+    this.setState({
+      input: evaluate(this.state.input),
+    });
+  };
+
   render() {
     return (
       <div>
@@ -86,19 +114,23 @@ class CalcPad extends Component {
         <Button onClick={this.handleInput} value='0'>
           0
         </Button>
-        <Button onClick={this.handleInput} value='='>
+        <Button onClick={this.evalExpression} value='='>
           =
         </Button>
         <Button onClick={this.handleInput} value='*'>
           x
         </Button>
         <br />
-        <Button onClick={this.handleInput} value=''>
-            Back
+        <Button onClick={this.backspace} value=''>
+          Back
         </Button>
       </div>
     );
   }
 }
 
-export default CalcPad;
+const mapStateToProps = (store) => ({
+  store,
+});
+
+export default connect(mapStateToProps)(CalcPad);

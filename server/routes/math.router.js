@@ -29,3 +29,4 @@ router.get("/equations", (req, res) => {
     })
 })
 
+module.exports = router;

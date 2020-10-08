@@ -13,6 +13,19 @@ function* addNewEquation(action) {
   }
 }
 
+function* getEquations(action) {
+    try {
+        let response = yield axios.get("math/equations");
+        console.log("saga response", response.data);
+        yield put ({
+            type: "SET_EQUATIONS",
+            payload: response.data
+        });
+    } catch (error) {
+        console.log("error in equation GET client side", error)
+    }
+}
+
 function* watchMe() {
     yield takeEvery("NEW_EQUATION", addNewEquation);
     yield takeEvery("FETCH_EQUATIONS", getEquations)

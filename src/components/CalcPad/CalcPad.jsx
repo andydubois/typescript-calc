@@ -60,9 +60,6 @@ class CalcPad extends Component {
         input: "ERROR",
       });
     }
-    this.setState({
-      input: evaluate(this.state.input),
-    });
   };
 
   render() {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 function* addNewEquation(action) {
   try {
-    yield axios.post("/math/add", action.payload);
+    yield axios.post(`/math/add`, action.payload);
     console.log("add equation client side", action.payload);
     yield put({
       type: "FETCH_EQUATIONS",
@@ -15,7 +15,7 @@ function* addNewEquation(action) {
 
 function* getEquations(action) {
     try {
-        let response = yield axios.get("math/equations");
+        let response = yield axios.get(`math/equations`);
         console.log("saga response", response.data);
         yield put ({
             type: "SET_EQUATIONS",

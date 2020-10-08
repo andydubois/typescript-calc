@@ -1,7 +1,8 @@
 const express = require("express");
 const pool = require("../modules/pool");
-
+require("dotenv").config();
 const router = express.Router();
+
 
 //adds equations entered on the DOM to the database
 router.post("/add", (req, res) => {

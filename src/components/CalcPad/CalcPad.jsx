@@ -8,8 +8,23 @@ import {withStyles} from "@material-ui/core/styles";
 const styles = {
   calcDisplay: {
     height: "20px",
-  }
-}
+  },
+  numButtons: {
+    margin: "1px",
+    width: "24px",
+  },
+  equalsButton: {
+    margin: "1px",
+    width: "60px",
+  },
+  backButton: {
+    margin: "1px",
+    width: "40px",
+    textAlign: "center",
+    paddingLeft: "3px",
+    paddingRight: "3px",
+  },
+};
 class CalcPad extends Component {
   state = {
     input: "",
@@ -92,63 +107,117 @@ class CalcPad extends Component {
     return (
       <div>
         <p className={this.props.classes.calcDisplay}>{this.state.input}</p>
-        <Button onClick={this.handleInput} value='1'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='1'>
           1
         </Button>
-        <Button onClick={this.handleInput} value='2'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='2'>
           2
         </Button>
-        <Button onClick={this.handleInput} value='3'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='3'>
           3
         </Button>
-        <Button onClick={this.handleInput} value='+'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='+'>
           +
         </Button>
         <br />
-        <Button onClick={this.handleInput} value='4'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='4'>
           4
         </Button>
-        <Button onClick={this.handleInput} value='5'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='5'>
           5
         </Button>
-        <Button onClick={this.handleInput} value='6'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='6'>
           6
         </Button>
-        <Button onClick={this.handleInput} value='-'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='-'>
           -
         </Button>
         <br />
-        <Button onClick={this.handleInput} value='7'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='7'>
           7
         </Button>
-        <Button onClick={this.handleInput} value='8'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='8'>
           8
         </Button>
-        <Button onClick={this.handleInput} value='9'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='9'>
           9
         </Button>
-        <Button onClick={this.handleInput} value='/'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='/'>
           ÷
         </Button>
         <br />
-        <Button onClick={this.clearInput} value=''>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.clearInput}
+          value=''>
           C
         </Button>
-        <Button onClick={this.handleInput} value='0'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='0'>
           0
         </Button>
-        <Button onClick={this.handleInput} value='.'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='.'>
           .
         </Button>
-        <Button onClick={this.handleInput} value='*'>
+        <Button
+          className={this.props.classes.numButtons}
+          onClick={this.handleInput}
+          value='*'>
           x
         </Button>
         <br />
-        <Button onClick={this.evalExpression} value='='>
-          =
-        </Button>
-        <Button onClick={this.backspace} value=''>
+        <Button
+          className={this.props.classes.backButton}
+          onClick={this.backspace}
+          value=''>
           Back
+        </Button>
+        <Button
+          className={this.props.classes.equalsButton}
+          onClick={this.evalExpression}
+          value='='>
+          =
         </Button>
         <div>
           {this.props.store.equationReducer.map((equation) => {

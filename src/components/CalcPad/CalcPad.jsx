@@ -1,14 +1,36 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import { evaluate } from "mathjs";
-import {connect} from "react-redux"
+import { evaluate, round } from "mathjs";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/core/styles";
 
+
+const styles = {
+  calcDisplay: {
+    height: "20px",
+  }
+}
 class CalcPad extends Component {
   state = {
     input: "",
     result: 0,
   };
 
+  //will retrieve equation list on page load
+  componentDidMount() {
+    this.fetchEquations();
+    //runs get every 5 seconds to check to any new entries from other users
+    setInterval(this.fetchEquations, 5000)
+  }
+
+  //retrieves equation list from database
+  fetchEquations = () => {
+    this.props.dispatch({
+      type: "FETCH_EQUATIONS",
+    });
+  };
+
+  //saves input in state to be displayed on DOM
   handleInput = (event) => {
     this.setState({
       ...this.state,
@@ -17,6 +39,7 @@ class CalcPad extends Component {
     console.log(this.state);
   };
 
+  //handles clear input button
   clearInput = (event) => {
     this.setState({
       ...this.state,
@@ -24,6 +47,7 @@ class CalcPad extends Component {
     });
   };
 
+  //handles backspace button, deleting one character at a time
   backspace = (event) => {
     try {
       this.setState({
@@ -36,12 +60,14 @@ class CalcPad extends Component {
     }
   };
 
+  //handles the equals button functionality, evaluates whole expression entered
   evalExpression = (event) => {
     //see if there is an expresson to evaluate
     try {
       this.setState(
         {
-          result: evaluate(this.state.input),
+          //rounds answer to 5 decimals points
+          result: round(evaluate(this.state.input), 5),
         },
         //set this function up to make sure that result is changed in state BEFORE the payload is sent to the saga, but before input is evaluated
         function () {
@@ -65,7 +91,7 @@ class CalcPad extends Component {
   render() {
     return (
       <div>
-        <p>{this.state.input}</p>
+        <p className={this.props.classes.calcDisplay}>{this.state.input}</p>
         <Button onClick={this.handleInput} value='1'>
           1
         </Button>
@@ -111,16 +137,28 @@ class CalcPad extends Component {
         <Button onClick={this.handleInput} value='0'>
           0
         </Button>
-        <Button onClick={this.evalExpression} value='='>
-          =
+        <Button onClick={this.handleInput} value='.'>
+          .
         </Button>
         <Button onClick={this.handleInput} value='*'>
           x
         </Button>
         <br />
+        <Button onClick={this.evalExpression} value='='>
+          =
+        </Button>
         <Button onClick={this.backspace} value=''>
           Back
         </Button>
+        <div>
+          {this.props.store.equationReducer.map((equation) => {
+            return (
+              <p>
+                {equation.equation} = {equation.result}
+              </p>
+            );
+          })}
+        </div>
       </div>
     );
   }
@@ -130,4 +168,4 @@ const mapStateToProps = (store) => ({
   store,
 });
 
-export default connect(mapStateToProps)(CalcPad);
+export default connect(mapStateToProps)(withStyles(styles)(CalcPad));

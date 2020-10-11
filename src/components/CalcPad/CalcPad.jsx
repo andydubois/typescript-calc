@@ -1,33 +1,55 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { evaluate, round } from "mathjs";
-import {connect} from "react-redux";
-import {withStyles} from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 
 
 const styles = {
+  calcDiv: {
+    // width: "20%",
+    // height: "50%",
+    margin: "0 auto",
+    backgroundColor: "#5f6769",
+    borderRadius: "15px",
+    textAlign: "center",
+  },
   calcDisplay: {
-    height: "20px",
+    height: "60px",
+    width: "100%",
+    margin: "0 auto",
+    fontSize: "1.7rem",
+    backgroundColor: "black",
+    color: "#ffffff",
+    borderRadius: "15px",
   },
   numButtons: {
-    margin: "1px",
-    width: "24px",
+    margin: "2px",
+    width: "50px",
+    // height: "25px",
+    fontSize: "1.3rem",
+    borderColor: "purple",
+    border: "thick",
+    textAlign: "center",
   },
   equalsButton: {
     margin: "1px",
-    width: "60px",
+    width: "130px",
   },
   backButton: {
     margin: "1px",
-    width: "40px",
+    width: "80px",
     textAlign: "center",
     paddingLeft: "3px",
     paddingRight: "3px",
   },
+  equationList: {
+    textAlign: "center",
+  },
 };
 class CalcPad extends Component {
   state = {
-    input: "",
+    input: 0,
     result: 0,
   };
 
@@ -35,7 +57,7 @@ class CalcPad extends Component {
   componentDidMount() {
     this.fetchEquations();
     //runs get every 5 seconds to check to any new entries from other users
-    setInterval(this.fetchEquations, 5000)
+    setInterval(this.fetchEquations, 5000);
   }
 
   //retrieves equation list from database
@@ -47,10 +69,18 @@ class CalcPad extends Component {
 
   //saves input in state to be displayed on DOM
   handleInput = (event) => {
-    this.setState({
-      ...this.state,
-      input: this.state.input + event.target.value,
-    });
+    if (this.state.input === 0) {
+      this.setState({
+        ...this.state,
+        input: event.target.value,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        input: this.state.input + event.target.value,
+      });
+    }
+
     console.log(this.state);
   };
 
@@ -106,120 +136,122 @@ class CalcPad extends Component {
   render() {
     return (
       <div>
-        <p className={this.props.classes.calcDisplay}>{this.state.input}</p>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='1'>
-          1
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='2'>
-          2
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='3'>
-          3
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='+'>
-          +
-        </Button>
-        <br />
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='4'>
-          4
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='5'>
-          5
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='6'>
-          6
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='-'>
-          -
-        </Button>
-        <br />
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='7'>
-          7
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='8'>
-          8
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='9'>
-          9
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='/'>
-          ÷
-        </Button>
-        <br />
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.clearInput}
-          value=''>
-          C
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='0'>
-          0
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='.'>
-          .
-        </Button>
-        <Button
-          className={this.props.classes.numButtons}
-          onClick={this.handleInput}
-          value='*'>
-          x
-        </Button>
-        <br />
-        <Button
-          className={this.props.classes.backButton}
-          onClick={this.backspace}
-          value=''>
-          Back
-        </Button>
-        <Button
-          className={this.props.classes.equalsButton}
-          onClick={this.evalExpression}
-          value='='>
-          =
-        </Button>
-        <div>
+        <div className={this.props.classes.calcDiv}>
+          <p className={this.props.classes.calcDisplay}>{this.state.input}</p>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='1'>
+            1
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='2'>
+            2
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='3'>
+            3
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='+'>
+            +
+          </Button>
+          <br />
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='4'>
+            4
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='5'>
+            5
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='6'>
+            6
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='-'>
+            -
+          </Button>
+          <br />
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='7'>
+            7
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='8'>
+            8
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='9'>
+            9
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='/'>
+            ÷
+          </Button>
+          <br />
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.clearInput}
+            value=''>
+            C
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='0'>
+            0
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='.'>
+            .
+          </Button>
+          <Button
+            className={this.props.classes.numButtons}
+            onClick={this.handleInput}
+            value='*'>
+            x
+          </Button>
+          <br />
+          <Button
+            className={this.props.classes.backButton}
+            onClick={this.backspace}
+            value=''>
+            Back
+          </Button>
+          <Button
+            className={this.props.classes.equalsButton}
+            onClick={this.evalExpression}
+            value='='>
+            =
+          </Button>
+        </div>
+        <div className={this.props.classes.equationList}>
           {this.props.store.equationReducer.map((equation) => {
             return (
               <p>

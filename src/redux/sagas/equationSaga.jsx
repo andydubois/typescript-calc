@@ -15,7 +15,7 @@ function* addNewEquation(action) {
 
 function* getEquations(action) {
     try {
-        let response = yield axios.get(`math/equations`);
+        let response = yield axios.get(`/math/equations`);
         console.log("saga response", response.data);
         yield put ({
             type: "SET_EQUATIONS",

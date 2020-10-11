@@ -7,8 +7,7 @@ import CalcPad from "../CalcPad/CalcPad";
 
 function App() {
   return (
-    <>
-      <header>Calculator 2020</header>
+    <div className='App'>
       <Container>
         <Row>
           <Col></Col>
@@ -18,9 +17,7 @@ function App() {
           <Col></Col>
         </Row>
       </Container>
-
-      <div className='App'></div>
-    </>
+    </div>
   );
 }
 

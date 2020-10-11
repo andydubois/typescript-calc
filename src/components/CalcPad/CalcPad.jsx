@@ -4,7 +4,6 @@ import { evaluate, round } from "mathjs";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
-
 const styles = {
   calcDiv: {
     // width: "20%",
@@ -13,38 +12,48 @@ const styles = {
     backgroundColor: "#5f6769",
     borderRadius: "15px",
     textAlign: "center",
+    paddingBottom: "10px",
+    marginBottom: "10px",
   },
   calcDisplay: {
     height: "60px",
     width: "100%",
     margin: "0 auto",
-    fontSize: "1.7rem",
+    fontSize: "1.9rem",
     backgroundColor: "black",
     color: "#ffffff",
     borderRadius: "15px",
+    marginBottom: "10px",
+    fontFamily: "calculator"
   },
   numButtons: {
     margin: "2px",
-    width: "50px",
+    width: "80px",
     // height: "25px",
     fontSize: "1.3rem",
     borderColor: "purple",
     border: "thick",
     textAlign: "center",
+    backgroundColor: "#6700ff",
   },
   equalsButton: {
     margin: "1px",
-    width: "130px",
+    width: "192px",
+    backgroundColor: "#6700ff",
+    border: "thick",
   },
   backButton: {
     margin: "1px",
-    width: "80px",
+    width: "138px",
     textAlign: "center",
     paddingLeft: "3px",
     paddingRight: "3px",
+    backgroundColor: "#6700ff",
+    border: "thick",
   },
   equationList: {
     textAlign: "center",
+    backgroundColor: "rgb(95,103,105, .9)",
   },
 };
 class CalcPad extends Component {
@@ -88,7 +97,7 @@ class CalcPad extends Component {
   clearInput = (event) => {
     this.setState({
       ...this.state,
-      input: "",
+      input: 0,
     });
   };
 
@@ -137,6 +146,7 @@ class CalcPad extends Component {
     return (
       <div>
         <div className={this.props.classes.calcDiv}>
+          <h2>Calculator 2020</h2>
           <p className={this.props.classes.calcDisplay}>{this.state.input}</p>
           <Button
             className={this.props.classes.numButtons}
@@ -252,11 +262,14 @@ class CalcPad extends Component {
           </Button>
         </div>
         <div className={this.props.classes.equationList}>
+          <h2>Past Equations</h2>
           {this.props.store.equationReducer.map((equation) => {
             return (
-              <p>
-                {equation.equation} = {equation.result}
-              </p>
+              <>
+                <p>
+                  {equation.equation} = {equation.result}
+                </p>
+              </>
             );
           })}
         </div>

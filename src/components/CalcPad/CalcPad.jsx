@@ -66,7 +66,7 @@ class CalcPad extends Component {
   componentDidMount() {
     this.fetchEquations();
     //runs get every 5 seconds to check to any new entries from other users
-    setInterval(this.fetchEquations, 5000);
+    // setInterval(this.fetchEquations, 5000);
   }
 
   //retrieves equation list from database

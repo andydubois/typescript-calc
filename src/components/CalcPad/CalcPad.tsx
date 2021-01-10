@@ -6,7 +6,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 interface IProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => string;
-  classes: any
+  classes: any;
+  input: string;
 }
 
 const styles = {
@@ -63,7 +64,7 @@ const styles = {
 };
 class CalcPad extends Component<IProps> {
   state = {
-    input: 0,
+    input: "",
     result: 0,
   };
 
@@ -83,7 +84,6 @@ class CalcPad extends Component<IProps> {
 
   //saves input in state to be displayed on DOM
   handleInput = (event: { target: { value: any; }; }) => {
-    event.preventDefault();
     if (this.state.input === 0) {
       this.setState({
         ...this.state,
@@ -130,7 +130,7 @@ class CalcPad extends Component<IProps> {
           result: round(evaluate(this.state.input), 5),
         },
         //set this function up to make sure that result is changed in state BEFORE the payload is sent to the saga, but before input is evaluated
-        function () {
+        () => {
           this.props.dispatch({
             type: "NEW_EQUATION",
             payload: this.state,
@@ -156,113 +156,113 @@ class CalcPad extends Component<IProps> {
           <p className={this.props.classes.calcDisplay}>{this.state.input}</p>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='1'>
             1
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='2'>
             2
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='3'>
             3
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='+'>
             +
           </Button>
           <br />
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='4'>
             4
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='5'>
             5
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='6'>
             6
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='-'>
             -
           </Button>
           <br />
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='7'>
             7
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='8'>
             8
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='9'>
             9
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='/'>
             ÷
           </Button>
           <br />
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value=''>
             C
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='0'>
             0
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='.'>
             .
           </Button>
           <Button
             className={this.props.classes.numButtons}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value='*'>
             x
           </Button>
           <br />
           <Button
             className={this.props.classes.backButton}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }}
             value=''>
             Back
           </Button>
           <Button
             className={this.props.classes.equalsButton}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { this.handleInput }
+            onClick={this.evalExpression}
             value='='>
             =
           </Button>
